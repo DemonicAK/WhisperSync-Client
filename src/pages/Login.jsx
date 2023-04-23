@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import { useLoginMutation } from "../services/appAPI";
 import { Row, Col, Button, Form, Container } from "react-bootstrap";
 import "./css/Login.css";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [loginUser, { isLoading, err }] = useLoginMutation();
+  const navigate = useNavigate();
+  const HandleLogin = (e) => {
+    e.preventDefault();
+    //login user
+    loginUser({
+      email: Email,
+      password: Password,
+    }).then(({ data }) => {
+      if (data) {
+        navigate("/Chat");
+        console.log(data);
+      }
+    });
+  };
   const Formstyle = {
     width: "80%",
     maxwidth: "500px",
@@ -17,22 +35,40 @@ const Login = () => {
           md={7}
           className="d-flex align-items-center justify-content-center flex-direction-column"
         >
-          <Form style={Formstyle}>
+          <Form style={Formstyle} onSubmit={HandleLogin}>
+            <h1 className="text-center"> Login To Chat</h1>
+
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                value={Email}
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                value={Password}
+                required
+              />
             </Form.Group>
             <Form.Group
               className="mb-3"
               controlId="formBasicCheckbox"
             ></Form.Group>
             <Button variant="primary" type="submit">
-              Submit
+              Login
             </Button>
             <div className="py-4">
               <p className="text-center">

@@ -1,46 +1,11 @@
 import React, { useState } from "react";
+import { useSignupMutation } from "../services/appAPI";
 import { Row, Col, Button, Form, Container } from "react-bootstrap";
 import "./css/Signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { bot } from "../assets";
 
 const Signup = () => {
-  const validateImg = (e) => {
-    let file = e.target.files[0];
-    if (file.size >= 1048576) {
-      alert("File size is too large");
-      return;
-    } else {
-      setImage(file);
-      setImgpreview(URL.createObjectURL(file));
-      setUploading(true);
-    }
-  };
-
-  const uploadImage = async (file) => {
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "chatapp");
-    data.append("cloud_name", "dmsj7kx6d");
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dmsj7kx6d/image/upload",
-      {
-        method: "POST",
-        body: data,
-      }
-    );
-    const resdata = await res.json();
-    console.log(resdata);
-    return resdata.url; 
-  }
-  const HandleSignup = async (e) => {
-    e.preventDefault();
-
-    if (!image) return alert("Please select an image");
-    else {
-      const url = await uploadImage(image);
-    }
-  };
   //credentials
   const [Name, setName] = useState("");
   const [Email, setEmail] = useState("");
@@ -51,10 +16,68 @@ const Signup = () => {
   const [Uploading, setUploading] = useState(false);
   const [Imgpreview, setImgpreview] = useState(null);
 
+  //signup user
+  const [signupUser, { isLoading, err }] = useSignupMutation();
+  const navigate = useNavigate();
   const Formstyle = {
     width: "80%",
     maxwidth: "500px",
   };
+
+  const validateImg = (e) => {
+    let file = e.target.files[0];
+    if (file.size >= 1048576) {
+      alert("File size is too large");
+      return;
+    } else {
+      setImage(file);
+      setImgpreview(URL.createObjectURL(file));
+      // setUploading(true);
+    }
+  };
+
+  const uploadImage = async (file) => {
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "makechatapp");
+    try {
+      setUploading(true);
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dgb2nv167/image/upload",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+      const urlfile = await res.json();
+      setUploading(false);
+      return urlfile.url;
+    } catch (err) {
+      setUploading(false);
+      console.log(err);
+    }
+  };
+  const HandleSignup = async (e) => {
+    e.preventDefault();
+    console.log("clicked");
+    if (!image) return alert("Please select an image");
+    else {
+      const url = await uploadImage(image);
+      console.log(url);
+      signupUser({
+        name: Name,
+        email: Email,
+        password: Password,
+        picture: url,
+      }).then(({ data }) => {
+        if (data) {
+          navigate("/Chat");
+          console.log(data);
+        }
+      });
+    }
+  };
+
   return (
     <Container>
       <Row>
@@ -124,7 +147,7 @@ const Signup = () => {
               controlId="formBasicCheckbox"
             ></Form.Group>
             <Button variant="primary" type="submit">
-              Submit
+              {Uploading ? "Signing you up..." : "Create Account"}
             </Button>
             <div className="py-4">
               <p className="text-center">
