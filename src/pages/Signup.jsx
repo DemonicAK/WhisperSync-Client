@@ -47,6 +47,7 @@ const Signup = () => {
         {
           method: "POST",
           body: data,
+          "Access-Control-Allow-Origin": "*",
         }
       );
       const urlfile = await res.json();
@@ -63,16 +64,18 @@ const Signup = () => {
     if (!image) return alert("Please select an image");
     else {
       const url = await uploadImage(image);
-      console.log(url);
-      signupUser({
+      console.log("before sign up after upload",url);
+      const obj = {
         name: Name,
         email: Email,
         password: Password,
         picture: url,
-      }).then(({ data }) => {
+      };
+      console.log("it will be passed to make the user",obj);
+      signupUser(obj).then(({ data }) => {
         if (data) {
           navigate("/Chat");
-          console.log(data);
+          console.log("After making of user after goin to chat screen",data.user);
         }
       });
     }
@@ -114,6 +117,7 @@ const Signup = () => {
                   setName(e.target.value);
                 }}
                 value={Name}
+                name="Name"
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -125,6 +129,7 @@ const Signup = () => {
                   setEmail(e.target.value);
                 }}
                 value={Email}
+                name="Email"
               />
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
@@ -140,6 +145,7 @@ const Signup = () => {
                   setPassword(e.target.value);
                 }}
                 value={Password}
+                name="Password"
               />
             </Form.Group>
             <Form.Group

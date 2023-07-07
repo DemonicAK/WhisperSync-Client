@@ -6,7 +6,16 @@ import { chatlogo } from "../assets";
 import { useLogoutMutation } from "../services/appAPI";
 
 const Navigation = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);   // it is returning the state of the user reducer // it is returning a {user:{}}
+  const current_user = user?user.user:null;
+
+  // console.log("in chat page for navbar", user);
+  // console.log("in chat page for navbar-----", current_user);
+
+  // console.log("in chat page for navbar", Object.keys(user));
+  // console.log(user.user.name);
+  // console.log(user.name);
+  // console.log(user.email);
   const [logoutUser] = useLogoutMutation();
 
   const HandleLogout = async (e) => {
@@ -59,10 +68,15 @@ const Navigation = () => {
               <NavDropdown
                 title={
                   <>
-                    <img src={user.picture} style={userpictureStyle} alt="" />
-                    {user.name}
+                    <img
+                      src={current_user.picture}
+                      style={userpictureStyle}
+                      alt="Profile Picture"
+                    />
+                    {current_user.name}
                   </>
                 }
+                // tittle="op"
                 id="basic-nav-dropdown"
               >
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

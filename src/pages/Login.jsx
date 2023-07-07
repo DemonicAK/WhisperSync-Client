@@ -18,7 +18,7 @@ const Login = () => {
     }).then(({ data }) => {
       if (data) {
         navigate("/Chat");
-        console.log(data);
+        console.log("After logining of user after goin to chat screen",data.user);
       }
     });
   };
@@ -47,6 +47,7 @@ const Login = () => {
                   setEmail(e.target.value);
                 }}
                 value={Email}
+                name="Email"
                 required
               />
             </Form.Group>
@@ -60,6 +61,7 @@ const Login = () => {
                   setPassword(e.target.value);
                 }}
                 value={Password}
+                name="Password"
                 required
               />
             </Form.Group>
