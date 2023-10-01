@@ -9,40 +9,49 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 // define a service user a base URL
 
 const appApi = createApi({
-    reducerPath: "appApi",
-    baseQuery: fetchBaseQuery({
-        baseUrl: BACKEND_URL,
+  reducerPath: "appApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: BACKEND_URL,
+  }),
+
+  endpoints: (builder) => ({
+    // creating the user
+    signupUser: builder.mutation({
+      query: (user) => ({
+        url: "/users",
+        method: "POST",
+        body: user,
+        headers: {
+          CORS: "no-cors",
+        },
+      }),
     }),
 
-    endpoints: (builder) => ({
-        // creating the user
-        signupUser: builder.mutation({
-            query: (user) => ({
-                url: "/users",
-                method: "POST",
-                body: user,
-            }),
-        }),
-
-        // login
-        loginUser: builder.mutation({
-            query: (user) => ({
-                url: "/users/login",
-                method: "POST",
-                body: user,
-            }),
-        }),
-
-        // logout
-
-        logoutUser: builder.mutation({
-            query: (payload) => ({
-                url: "/logout",
-                method: "DELETE",
-                body: payload,
-            }),
-        }),
+    // login
+    loginUser: builder.mutation({
+      query: (user) => ({
+        url: "/users/login",
+        method: "POST",
+        body: user,
+        headers: {
+          CORS: "no-cors",
+        },
+      }),
     }),
+
+    // logout
+
+    logoutUser: builder.mutation({
+      query: (payload) => ({
+        url: "/logout",
+        method: "DELETE",
+        body: payload,
+        headers: {
+          CORS: "no-cors",
+        },
+      }),
+    }),
+  }),
 });
 
 export const { useSignupUserMutation, useLoginUserMutation, useLogoutUserMutation } = appApi;
