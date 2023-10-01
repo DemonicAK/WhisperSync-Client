@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
 import { addNotifications, resetNotifications } from "../features/userSlice";
 import "./css/Sidebar.css";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 function Sidebar() {
   const user = useSelector((state) => state.user);
@@ -52,7 +53,7 @@ function Sidebar() {
   });
 
   function getRooms() {
-    fetch("http://localhost:5001/rooms")
+    fetch(`${BACKEND_URL}/rooms`)
       .then((res) => res.json())
       .then((data) => setRooms(data));
   }
