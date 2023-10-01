@@ -1,8 +1,7 @@
 import { io } from "socket.io-client";
-import React, { createContext, useEffect, useState } from "react";
-
-const SOCKET_URL = "http://localhost:5000";
-
-//a
+import React from "react";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const SOCKET_URL = BACKEND_URL;
 export const socket = io(SOCKET_URL);
-export const AppContext = createContext();
+// app context
+export const AppContext = React.createContext();

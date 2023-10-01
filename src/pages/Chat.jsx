@@ -1,20 +1,21 @@
 import React from "react";
-import { Sidebar, Messageform } from "../components";
-import { Row, Col, Button, Form, Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import Sidebar from "../components/Sidebar";
+import MessageForm from "../components/MessageForm";
 
-const Chat = () => {
+function Chat() {
   return (
     <Container>
       <Row>
-        <Col md={4} className=" border-bg-black " >
+        <Col md={4}>
           <Sidebar />
         </Col>
-        <Col md={8} >
-          <Messageform />
+        <Col md={8}>
+          <MessageForm />
         </Col>
       </Row>
     </Container>
   );
-};
+}
 
 export default Chat;

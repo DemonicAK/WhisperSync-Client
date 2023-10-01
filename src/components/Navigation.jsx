@@ -1,79 +1,55 @@
 import React from "react";
-import { LinkContainer } from "react-router-bootstrap";
+import { Nav, Navbar, Container, Button, NavDropdown } from "react-bootstrap";
+import { useLogoutUserMutation } from "../services/appApi";
 import { useSelector } from "react-redux";
-import { Container, Nav, Navbar, NavDropdown, Button } from "react-bootstrap";
-import { chatlogo } from "../assets";
-import { useLogoutMutation } from "../services/appAPI";
-
-const Navigation = () => {
-  const {user} = useSelector((state) => state.user); // it is returning the state of the user reducer // it is returning a {user:{}}
-
-
-  console.log("in chat page for navbar", user);
- 
-
-
-  const [logoutUser] = useLogoutMutation();
-
-  const HandleLogout = async (e) => {
+import { LinkContainer } from "react-router-bootstrap";
+import logo from "../assets/logo.png";
+function Navigation() {
+  const user = useSelector((state) => state.user);
+  const [logoutUser] = useLogoutUserMutation();
+  async function handleLogout(e) {
     e.preventDefault();
-    await logoutUser();
-    // localStorage.removeItem("user");
+    await logoutUser(user);
+    // redirect to home page
     window.location.replace("/");
-  };
-
-  const logostyle = {
-    width: "50px",
-    height: "50px",
-  };
-  const userpictureStyle = {
-    width: "30px",
-    height: "30px",
-    marginRight: "10px",
-    objectFit: "cover",
-    borderRadius: "50%",
-  };
+  }
+  //  src/services/appAPI.jsx
   return (
     <Navbar bg="light" expand="lg">
       <Container>
         <LinkContainer to="/">
           <Navbar.Brand>
-            <img src={chatlogo} alt="Logo" style={logostyle} />
+            <img src={logo} style={{ width: 50, height: 50 }} />
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            {/* <LinkContainer to="/">
-              <Nav.Link>Home</Nav.Link>
-            </LinkContainer> */}
-            <LinkContainer to="/Chat">
-              <Nav.Link>Chat</Nav.Link>
-            </LinkContainer>
             {!user && (
-              <LinkContainer to="/Login">
+              <LinkContainer to="/login">
                 <Nav.Link>Login</Nav.Link>
               </LinkContainer>
             )}
-            {!user && (
-              <LinkContainer to="/Signup">
-                <Nav.Link>Signup</Nav.Link>
-              </LinkContainer>
-            )}
-
+            <LinkContainer to="/chat">
+              <Nav.Link>Chat</Nav.Link>
+            </LinkContainer>
             {user && (
               <NavDropdown
                 title={
                   <>
                     <img
                       src={user.picture}
-                      style={userpictureStyle}
-                      alt="Profile Picture"
+                      style={{
+                        width: 30,
+                        height: 30,
+                        marginRight: 10,
+                        objectFit: "cover",
+                        borderRadius: "50%",
+                      }}
                     />
                     {user.name}
                   </>
                 }
-                // tittle="op"
                 id="basic-nav-dropdown"
               >
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -83,10 +59,10 @@ const Navigation = () => {
                 <NavDropdown.Item href="#action/3.3">
                   Something
                 </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  <Button variant="danger" onClick={HandleLogout}>
-                    Log Out
+
+                <NavDropdown.Item>
+                  <Button variant="danger" onClick={handleLogout}>
+                    Logout
                   </Button>
                 </NavDropdown.Item>
               </NavDropdown>
@@ -96,6 +72,6 @@ const Navigation = () => {
       </Container>
     </Navbar>
   );
-};
+}
 
 export default Navigation;

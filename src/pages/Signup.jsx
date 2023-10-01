@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSignupMutation } from "../services/appAPI";
+import { useSignupUserMutation } from "../services/appApi";
 import { Row, Col, Button, Form, Container } from "react-bootstrap";
 import "./css/Signup.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ const Signup = () => {
   const [Imgpreview, setImgpreview] = useState(null);
 
   //signup user
-  const [signupUser, { isLoading, err }] = useSignupMutation();
+  const [signupUser, { isLoading, err }] = useSignupUserMutation();
   const navigate = useNavigate();
   const Formstyle = {
     width: "80%",

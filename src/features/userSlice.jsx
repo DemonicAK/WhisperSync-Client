@@ -1,33 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
-import appApi from "../services/appAPI";
+import appApi from "../services/appApi";
 
 export const userSlice = createSlice({
   name: "user",
   initialState: null,
   reducers: {
-    addNotifications: (state, { payload }) => {},
-    resetNotifications: (state, { payload }) => {},
+    addNotifications: (state, { payload }) => {
+      if (state.newMessages[payload]) {
+        state.newMessages[payload] = state.newMessages[payload] + 1;
+      } else {
+        state.newMessages[payload] = 1;
+      }
+    },
+    resetNotifications: (state, { payload }) => {
+      delete state.newMessages[payload];
+    },
   },
-  // Add reducers for additional action types here, and handle loading state as needed
+
   extraReducers: (builder) => {
-    //save the user in the state after signup
+    // save user after signup
     builder.addMatcher(
-      appApi.endpoints.signup.matchFulfilled,
-      (state, { payload }) => {
-        return payload;
-      }
+      appApi.endpoints.signupUser.matchFulfilled,
+      (state, { payload }) => payload
     );
-    //save the user in the state after login
+    // save user after login
     builder.addMatcher(
-      appApi.endpoints.login.matchFulfilled,
-      (state, { payload }) => {
-        return payload;
-      }
+      appApi.endpoints.loginUser.matchFulfilled,
+      (state, { payload }) => payload
     );
-    //remove the user from the state after logout
-    builder.addMatcher(appApi.endpoints.logout.matchFulfilled, () => {
-      return null;
-    });
+    // logout: destroy user session
+    builder.addMatcher(appApi.endpoints.logoutUser.matchFulfilled, () => null);
   },
 });
 

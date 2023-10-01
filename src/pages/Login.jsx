@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLoginMutation } from "../services/appAPI";
+import { useLoginUserMutation } from "../services/appApi";
 import { Row, Col, Button, Form, Container } from "react-bootstrap";
 import "./css/Login.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
-  const [loginUser, { isLoading, err }] = useLoginMutation();
+  const [loginUser, { isLoading, err }] = useLoginUserMutation();
   const navigate = useNavigate();
   const HandleLogin = (e) => {
     e.preventDefault();
