@@ -6,9 +6,10 @@ export const socket = io(SOCKET_URL, {
   // "force new connection": true,
   // reconnectionAttempts: "Infinity",
   // timeout: 10001,
-  // transports: ["websocket"],
+  transports: ["websocket"],
+  allowEIO3: true,
   //   rememberUpgrade:true,
-  //   secure:true, 
+  //   secure:true,
   // rejectUnauthorized: false,
   // extraHeaders: {
   //   "my-custom-header": "abcd",
