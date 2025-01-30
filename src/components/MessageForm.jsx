@@ -3,6 +3,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { AppContext } from "../context/appContext";
 import "./css/MessageForm.css";
+import { bot } from "../assets";
 function MessageForm() {
   const [message, setMessage] = useState("");
   const user = useSelector((state) => state.user);
@@ -65,7 +66,7 @@ function MessageForm() {
               <div>
                 Your conversation with {privateMemberMsg.name}{" "}
                 <img
-                  src={privateMemberMsg.picture}
+                  src={privateMemberMsg.picture }
                   className="conversation-profile-pic"
                 />
               </div>
@@ -93,7 +94,7 @@ function MessageForm() {
                     <div className="message-inner">
                       <div className="d-flex align-items-center mb-3">
                         <img
-                          src={sender.picture}
+                          src={sender.picture || bot}
                           style={{
                             width: 35,
                             height: 35,

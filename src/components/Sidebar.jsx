@@ -81,7 +81,8 @@ function Sidebar() {
       <ListGroup>
         {rooms.map((room, idx) => (
           <ListGroup.Item
-            key={idx}
+            // key={idx}
+            key={room}
             onClick={() => joinRoom(room)}
             active={room == currentRoom}
             style={{
@@ -102,7 +103,8 @@ function Sidebar() {
       <h2>Members</h2>
       {members.map((member) => (
         <ListGroup.Item
-          key={member.id}
+          // key={member.id}
+          key={member._id}
           style={{ cursor: "pointer" }}
           active={privateMemberMsg?._id == member?._id}
           onClick={() => handlePrivateMemberMsg(member)}

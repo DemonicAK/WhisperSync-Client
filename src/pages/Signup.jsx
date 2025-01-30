@@ -58,28 +58,34 @@ const Signup = () => {
       console.log(err);
     }
   };
-  const HandleSignup = async (e) => {
-    e.preventDefault();
-    console.log("clicked");
-    if (!image) return alert("Please select an image");
-    else {
-      const url = await uploadImage(image);
-      console.log("before sign up after upload",url);
-      const obj = {
-        name: Name,
-        email: Email,
-        password: Password,
-        picture: url,
-      };
-      console.log("it will be passed to make the user",obj);
-      signupUser(obj).then(({ data }) => {
-        if (data) {
-          navigate("/Chat");
-          console.log("After making of user after goin to chat screen",data.user);
-        }
-      });
-    }
+const HandleSignup = async (e) => {
+  e.preventDefault();
+  console.log("clicked");
+
+  let profilePicture = null;
+
+  // Only upload image if one was selected
+  if (image) {
+    profilePicture = await uploadImage(image);
+    console.log("before sign up after upload", profilePicture);
+  }
+
+  const obj = {
+    name: Name,
+    email: Email,
+    password: Password,
+    picture: profilePicture , // Use default if no image uploaded
   };
+
+  console.log("it will be passed to make the user", obj);
+
+  signupUser(obj).then(({ data }) => {
+    if (data) {
+      navigate("/Chat");
+      console.log("After making of user after going to chat screen", data.user);
+    }
+  });
+};
 
   return (
     <Container>

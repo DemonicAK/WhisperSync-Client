@@ -18,7 +18,7 @@ const appApi = createApi({
     // creating the user
     signupUser: builder.mutation({
       query: (user) => ({
-        url: "/users",
+        url: "/users/create",
         method: "POST",
         body: user,
         headers: {

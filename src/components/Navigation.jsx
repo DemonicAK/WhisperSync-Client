@@ -4,6 +4,7 @@ import { useLogoutUserMutation } from "../services/appApi";
 import { useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import logo from "../assets/logo.png";
+import { bot } from "../assets";
 function Navigation() {
   const user = useSelector((state) => state.user);
   const [logoutUser] = useLogoutUserMutation();
@@ -38,7 +39,7 @@ function Navigation() {
                 title={
                   <>
                     <img
-                      src={user.picture}
+                      src={user.picture || bot}
                       style={{
                         width: 30,
                         height: 30,
