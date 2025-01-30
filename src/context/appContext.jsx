@@ -19,7 +19,7 @@ const SOCKET_URL = BACKEND_URL;
 //   // },
 // });
 // // app context
-// export const AppContext = React.createContext();
+
 
 
 export const socket = io(SOCKET_URL, {
@@ -35,3 +35,6 @@ export const socket = io(SOCKET_URL, {
 socket.on("connect_error", (error) => {
   console.error("Socket connection error:", error);
 });
+
+
+export const AppContext = React.createContext();
