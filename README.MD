@@ -1,4 +1,4 @@
-# WhisperSync - Client
+# Huddle - Client
 
 WhisperSync is a real-time chat application built with React, Vite, React Bootstrap, Redux, and Context API. This repository contains the frontend codebase for WhisperSync.
 
