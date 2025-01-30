@@ -21,9 +21,9 @@ const appApi = createApi({
         url: "/users/create",
         method: "POST",
         body: user,
-        headers: {
-          CORS: "no-cors",
-        },
+        // headers: {
+        //   CORS: "no-cors",
+        // },
       }),
     }),
 
@@ -33,9 +33,9 @@ const appApi = createApi({
         url: "/users/login",
         method: "POST",
         body: user,
-        headers: {
-          CORS: "no-cors",
-        },
+        // headers: {
+        //   CORS: "no-cors",
+        // },
       }),
     }),
 
@@ -46,9 +46,9 @@ const appApi = createApi({
         url: "/logout",
         method: "DELETE",
         body: payload,
-        headers: {
-          CORS: "no-cors",
-        },
+        // headers: {
+        //   CORS: "no-cors",
+        // },
       }),
     }),
   }),
